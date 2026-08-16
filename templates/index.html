@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>حجز موعد العيادة</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            background: linear-gradient(135deg, #e9f0ff, #f7f9ff);
+            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+        }
+        .card.booking { width: 360px; text-align: center; }
+        .welcome-box { background:#f2f6ff; border-radius:10px; padding:10px; color:var(--blue); font-size:14px; line-height:1.6; margin-bottom:15px; }
+        .info { font-size:14px; color:#666; margin-bottom:15px; }
+        .closed { color: var(--red); font-weight: bold; margin-top: 10px; }
+    </style>
+</head>
+<body>
+<div class="card booking">
+    <h2 style="color: var(--blue); margin-bottom:10px;">نظام حجز العيادة</h2>
+
+    <div class="welcome-box">
+        <b>عيادة لحرش الطبية ترحب بكم</b><br>
+        Clinique El Harrach — Radiologie · Cardiologie · Médecine Générale · Ophtalmologie
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, msg in messages %}
+                <div class="flash {{ 'error' if category=='error' else '' }}">{{ msg }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="info">يرجى ملء المعلومات بدقة، وسيتم توزيعكم على طبيب متاح في التخصص المطلوب</div>
+
+    {% if open %}
+    <form method="POST" action="/book" enctype="multipart/form-data">
+        <input type="text" name="fullname" placeholder="الاسم الكامل" required>
+        <input type="text" name="phone" placeholder="رقم الهاتف" required>
+        <input type="number" name="age" placeholder="العمر">
+
+        <select name="specialty" id="specialty" onchange="loadExams()" required>
+            <option value="">-- اختر التخصص --</option>
+            {% for key, label in specialties.items() %}
+                <option value="{{ key }}">{{ label }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="exam" id="exam" required>
+            <option value="">-- اختر التخصص أولاً --</option>
+        </select>
+
+        <input type="file" name="prescription" id="prescription">
+        <div style="font-size:12px; color:#888; text-align:right; margin-top:-4px;">
+            (اختياري: بون فحص أو وصفة طبية إن وُجدت)
+        </div>
+
+        <button type="submit">إرسال طلب الحجز</button>
+    </form>
+    {% else %}
+    <div class="closed">❌ الحجز مغلق حالياً</div>
+    {% endif %}
+</div>
+
+<script>
+const examsBySpecialty = {{ exams_by_specialty|tojson }};
+
+function loadExams() {
+    const specialty = document.getElementById("specialty").value;
+    const examSelect = document.getElementById("exam");
+    examSelect.innerHTML = "";
+
+    if (!specialty) {
+        examSelect.innerHTML = '<option value="">-- اختر التخصص أولاً --</option>';
+        return;
+    }
+
+    const exams = examsBySpecialty[specialty] || [];
+    examSelect.innerHTML = '<option value="">-- اختر نوع الفحص --</option>';
+    exams.forEach(e => {
+        const opt = document.createElement("option");
+        opt.value = e;
+        opt.textContent = e;
+        examSelect.appendChild(opt);
+    });
+}
+</script>
+</body>
+</html>

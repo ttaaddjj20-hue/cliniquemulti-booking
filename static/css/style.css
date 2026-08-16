@@ -1,0 +1,140 @@
+:root {
+    --blue: #2d6cdf;
+    --blue-dark: #1b4fb3;
+    --bg: #f4f6fb;
+    --card-bg: #ffffff;
+    --red: #e74c3c;
+    --green: #2ecc71;
+    --orange: #f39c12;
+    --purple: #7d5fff;
+    --teal: #17a2a2;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    margin: 0;
+    color: #222;
+}
+
+a { color: var(--blue); }
+
+.container {
+    max-width: 1150px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ---------- Top nav ---------- */
+.topnav {
+    background: var(--blue);
+    color: white;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.topnav .brand { font-weight: bold; font-size: 16px; }
+.topnav .brand small { display:block; font-weight:normal; font-size:12px; opacity:0.85; }
+
+.topnav nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 10px;
+    font-size: 14px;
+    padding: 6px 10px;
+    border-radius: 6px;
+}
+
+.topnav nav a:hover, .topnav nav a.active { background: rgba(255,255,255,0.18); }
+.topnav .logout { background: var(--red); }
+
+/* ---------- Cards ---------- */
+.card {
+    background: var(--card-bg);
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    margin-bottom: 16px;
+}
+
+.flash {
+    background: #d4edda; color: #155724;
+    padding: 10px 14px; border-radius: 8px; margin-bottom: 14px; font-size: 14px;
+}
+.flash.error { background:#f8d7da; color:#721c24; }
+
+/* ---------- Tables ---------- */
+table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; }
+th { background: var(--blue); color: white; padding: 10px; font-size: 14px; }
+td { padding: 9px; text-align: center; border-bottom: 1px solid #eee; font-size: 14px; }
+tr:hover td { background: #f5f8ff; }
+th.sortable { cursor: pointer; }
+
+tr.radiologie        { background: #e8f5ff; }
+tr.cardiologie       { background: #ffe8ee; }
+tr.medecine_generale { background: #e8fff2; }
+tr.ophtalmologie     { background: #f0ecff; }
+
+/* ---------- Forms ---------- */
+input, select, textarea {
+    width: 100%; padding: 10px; margin: 6px 0;
+    border-radius: 8px; border: 1px solid #ccc; font-size: 14px;
+}
+button, .btn {
+    display: inline-block; padding: 10px 16px;
+    background: var(--blue); color: white; border: none;
+    border-radius: 8px; font-size: 14px; cursor: pointer; text-decoration: none;
+}
+button:hover, .btn:hover { background: var(--blue-dark); }
+.btn-danger { background: var(--red); }
+.btn-danger:hover { background: #c0392b; }
+.btn-outline { background:white; color:var(--blue); border:1px solid var(--blue); }
+
+/* ---------- Badges ---------- */
+.badge {
+    display: inline-block; padding: 10px 15px; border-radius: 10px;
+    color: white; font-size: 14px; min-width: 150px; text-align: center;
+}
+.badge.ok { background: var(--green); }
+.badge.warn { background: var(--orange); }
+.badge.full { background: var(--red); }
+.badge.unlimited { background: #3498db; }
+
+.specialty-tag {
+    display:inline-block; padding:3px 10px; border-radius:20px;
+    font-size:12px; color:white; background:var(--purple);
+}
+.specialty-tag.radiologie { background:#3498db; }
+.specialty-tag.cardiologie { background:#e74c3c; }
+.specialty-tag.medecine_generale { background:#2ecc71; }
+.specialty-tag.ophtalmologie { background:#7d5fff; }
+
+.stat-card {
+    background: white; padding: 10px 20px; border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1); min-width: 120px; text-align: center;
+}
+.stat-value { color: var(--blue); font-weight: bold; }
+
+/* ---------- Login page ---------- */
+.login-wrap {
+    min-height: 100vh; display:flex; align-items:center; justify-content:center;
+    background: linear-gradient(135deg, #e9f0ff, #f7f9ff);
+    padding: 20px;
+}
+.login-card { background:white; padding:30px; border-radius:16px; width:420px; box-shadow:0 10px 25px rgba(0,0,0,0.1); }
+.quick-login { display:flex; flex-direction:column; gap:8px; margin-bottom:18px; }
+.quick-login button {
+    text-align:right; background:#f2f6ff; color:var(--blue); font-weight:bold;
+    display:flex; justify-content:space-between; align-items:center;
+}
+.quick-login button:hover { background:#e2ecff; }
+.quick-login button small { font-weight:normal; opacity:0.75; }
+hr.sep { border:0; border-top:1px solid #eee; margin:18px 0; }
+
+@media print { .no-print { display:none !important; } }
