@@ -376,8 +376,11 @@ def book():
     return redirect(url_for("index"))
 
 
+# تهيئة قاعدة البيانات عند تشغيل التطبيق
+# يعمل سواءً شُغّل التطبيق مباشرة أو بواسطة Gunicorn على Render
+init_db()
+
+
 if __name__ == "__main__":
-    init_db()
     port = int(os.environ.get("PORT", 5000))
-    # host="0.0.0.0" حتى يمكن فتحه من أي جهاز بنفس الشبكة عبر Chrome، وليس فقط من هذا الحاسوب
     app.run(host="0.0.0.0", port=port, debug=False)
