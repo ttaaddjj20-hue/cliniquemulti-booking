@@ -584,13 +584,13 @@ def index():
 @app.route("/debug-db")
 def debug_db():
     db = get_db()
-    info = db.execute("SELECT current_database(), inet_server_addr()::text").fetchone()
+    info = db.execute("SELECT current_database() AS dbname, inet_server_addr()::text AS ip").fetchone()
     count_p = db.execute("SELECT COUNT(*) AS c FROM patients").fetchone()
     count_a = db.execute("SELECT COUNT(*) AS c FROM appointments").fetchone()
     last = db.execute("SELECT id, created_at FROM appointments ORDER BY id DESC LIMIT 1").fetchone()
     return {
-        "database": info[0],
-        "server_ip": info[1],
+        "database": info["dbname"],
+        "server_ip": info["ip"],
         "patients_count": count_p["c"],
         "appointments_count": count_a["c"],
         "last_appointment": dict(last) if last else None,
