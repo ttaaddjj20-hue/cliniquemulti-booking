@@ -6,15 +6,28 @@
 يمكن تغييره عبر متغير البيئة CLINIQUE_DATA_DIR (مثلاً لتوجيه التطبيقين
 نحو مجلد مشترك على الشبكة إذا كانا يعملان على جهازين مختلفين).
 """
-
 import os
+
+# ==============================
+# PostgreSQL
+# ==============================
+
+DATABASE_URL = os.environ.get("DATABASE_URL")
+
+
+# ==============================
+# الملفات المحلية
+# ==============================
 
 _THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
-DATA_DIR = os.environ.get("CLINIQUE_DATA_DIR") or os.path.join(_THIS_DIR, "..", "data")
-DATA_DIR = os.path.abspath(DATA_DIR)
+DATA_DIR = os.path.abspath(
+    os.environ.get(
+        "CLINIQUE_DATA_DIR",
+        os.path.join(_THIS_DIR, "..", "data")
+    )
+)
 
-DB_PATH = os.path.join(DATA_DIR, "database.db")
 UPLOADS_DIR = os.path.join(DATA_DIR, "uploads")
 EXPORTS_DIR = os.path.join(DATA_DIR, "exports")
 
